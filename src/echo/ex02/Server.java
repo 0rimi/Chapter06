@@ -1,4 +1,4 @@
-package echo.ex01;
+package echo.ex02;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -21,7 +21,7 @@ public class Server {
 		//1. 켜놓고 클라이언트의 연결요청 기다리는 상태
 		
 		System.out.println("<서버시작>");
-		System.out.println("=================");
+		System.out.println("=============================");
 		System.out.println("[연결을 기다리고 있습니다.]");
 		
 		Socket socket = serverSocket.accept();
@@ -38,14 +38,29 @@ public class Server {
 		OutputStreamWriter osw = new OutputStreamWriter(os, "utf-8");
 		BufferedWriter bw = new BufferedWriter(osw);
 		
-		//받기
-		String msg = br.readLine();
-		System.out.println("받은메세지 : "+msg);
 		
-		//보내기
-		bw.write(msg);
-		bw.newLine();
-		bw.flush();
+		while(true) {
+			//받기
+			String msg = br.readLine();
+			
+			if(msg == null) {
+				System.out.println("클라이언트가 종료키 입력");
+				break;
+			}
+			
+			System.out.println("받은메세지 : "+msg);
+			
+			//보내기
+			bw.write(msg);
+			bw.newLine();
+			bw.flush();
+		}
+		
+
+		
+		System.out.println("=============================");
+		System.out.println("<서버종료>");
+		
 		
 		bw.close();
 		br.close();
